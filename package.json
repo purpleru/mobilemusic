@@ -1,7 +1,7 @@
 {
   "name": "MobileMusic",
   "version": "1.0.0",
-  "description": "",
+  "description": "一个简单的网易云H5移动端播放器",
   "main": "./src/index.js",
   "scripts": {
     "dev": "webpack serve --config ./webpack.config.js",

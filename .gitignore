@@ -1,5 +1,5 @@
 
 node_modules
 
-# 忽略 webpack 打包后的目录
+# 忽略 webpack 打包后的文件
 dist/*
