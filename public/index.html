@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网易云音乐播放器</title>
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <a class="close" href="javascript:;" title="关闭"></a>
+            <span class="song_name">冬天的秘密</span>
+            <span class="song_author">----</span>
+            <a class="share" href="javascript:;" title="分享"></a>
+        </header>
+        <main class="player">
+            <div class="turntable">
+                <div id="cover">
+                </div>
+            </div>
+            <div class="straw"></div>
+            <div class="fun_bar">
+                <a class="fun_bar_love" href="javascript:;" title="添加到我喜欢"></a>
+                <a class="fun_bar_eml" href="javascript:;" title="下载歌曲"></a>
+                <a class="fun_bar_dv4" href="javascript:;" title="唱""></a>
+                <a class=" fun_bar_em1" href="javascript:;" title="评论"></a>
+                <a class="fun_bar_enj" href="javascript:;" title="展开"></a>
+
+            </div>
+            <div class="progress_box">
+                <span class="now_time">00:00</span>
+                <div class="progress">
+                    <div class="progress_bar">
+                        <a class="progress_bar_dot" href="javascript:;"></a>
+                    </div>
+                </div>
+                <span class="end_time">00:00</span>
+            </div>
+        </main>
+        <footer class="play_bar">
+            <a class="play_order order" href="javascript:;" title="播放顺序"></a>
+            <a class="play_prev" href="javascript:;" title="上一首"></a>
+            <a class="play_btn play suspend" href="javascript:;" title="播放/暂停"></a>
+            <a class="play_next" href="javascript:;" title="下一首"></a>
+            <a class="play_fun" href="javascript:;" title="列表"></a>
+
+        </footer>
+    </div>
+    <div id="bj"></div>
+    <div id="mask"></div>
+    <audio id="audio"></audio>
+</body>
+
+</html>

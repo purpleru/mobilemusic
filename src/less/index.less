@@ -1,0 +1,362 @@
+@screenSize: 375;
+
+@multiple: 20rem;
+
+@size: (100vw / @screenSize) * @multiple;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-size: @size;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media screen and (min-width:520px) {
+    html {
+        font-size: 27.7333px;
+    }
+}
+
+
+@keyframes elScale {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
+}
+
+.animation_elScale {
+    animation-name: elScale;
+    animation-duration: 0.3s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+    animation-timing-function: ease;
+}
+
+#container {
+    position: relative;
+    max-width: 520px;
+    height: 100%;
+    margin: 0 auto;
+
+    header {
+        position: relative;
+        height: (51 / @multiple);
+        text-align: center;
+        color: rgb(255, 255, 255);
+        font-family: Microsoft YaHei;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0px;
+
+        .song_name {
+            display: inline-block;
+            max-width: 60%;
+            margin-top: (12 / @multiple);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .song_author {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            color: rgb(126, 119, 119);
+            font-size: 12px;
+            transform: translateX(-50%);
+        }
+
+        .close {
+            position: absolute;
+            width: (18 / @multiple);
+            height: (16 / @multiple);
+            top: (16 / @multiple);
+            left: (17 / @multiple);
+            background-image: url('../asset/di8.png');
+            background-repeat: no-repeat;
+            background-size: (18 / @multiple) (16 / @multiple);
+        }
+
+        .share {
+            position: absolute;
+            top: (8 / @multiple);
+            right: (10 / @multiple);
+            width: (32 / @multiple);
+            height: (32 / @multiple);
+            background: url('../asset/em_.png') 0% 0% no-repeat;
+            background-size: cover;
+        }
+    }
+
+    .player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-top: (51 / @multiple);
+        margin-bottom: (70 / @multiple);
+        z-index: 10;
+
+        .turntable {
+            position: absolute;
+            top: (94 / @multiple);
+            left: 50%;
+            width: (248 / @multiple);
+            height: (248 / @multiple);
+            margin-left: ((-248 / 2) / @multiple);
+            background: transparent url('../asset/_elw.png') 0 0 no-repeat;
+        }
+
+        .straw {
+            position: absolute;
+            top: (-10 / @multiple);
+            left: (171 / @multiple);
+            width: (86 / @multiple);
+            height: (166 / @multiple);
+            background: transparent url('../asset/_eob.png') 0 0 no-repeat;
+            background-size: contain;
+            z-index: 9;
+            transform: rotate(1deg);
+            transition: transform 0.5s;
+            transform-origin: 32px 55px;
+        }
+
+        .straw_out {
+            transform: rotate(-20deg);
+        }
+
+        #cover {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: (160 / @multiple);
+            height: (160 / @multiple);
+            margin-top: ((-160 / 2) / @multiple);
+            margin-left: ((-160 / 2) / @multiple);
+            background: transparent url('../asset/el4.png') 0 0 no-repeat;
+        }
+
+        .turntable,
+        #cover {
+            border-radius: 50%;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .fun_bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: absolute;
+            left: 0;
+            bottom: (20 / @multiple);
+            width: 100%;
+            height: (50 / @multiple);
+            padding: 0 (40 / @multiple);
+            box-sizing: border-box;
+
+            a {
+                width: (33 / @multiple);
+                height: (30 / @multiple);
+            }
+
+            .fun_bar_love {
+                background: url('../asset/_f4t.png') no-repeat 0 0/cover;
+                // transition: transform 0.5s;
+            }
+
+            .fun_bar_eml {
+                background: url('../asset/_eml.png') no-repeat 0 0/cover;
+            }
+
+            .fun_bar_eml:active {
+                background: url('../asset/_emm.png') no-repeat 0 0/cover;
+            }
+
+            .fun_bar_dv4 {
+                background: url('../asset/_dv4.png') no-repeat 0 0/cover;
+            }
+
+            .fun_bar_em1 {
+                background: url('../asset/_em1.png') no-repeat 0 0/cover;
+            }
+
+            .fun_bar_enj {
+                background: url('../asset/_enj.png') no-repeat 0 0/cover;
+            }
+
+        }
+
+        .progress_box {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: (338 / @multiple);
+            user-select: none;
+            transform: translateX(-50%);
+            z-index: 9;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            
+            .progress {
+                width: (270 / @multiple);
+                height: 1px;
+                margin: 0 10px;
+                background-color: rgb(221, 214, 214);
+
+                .progress_bar {
+                    position: relative;
+                    width: 0%;
+                    height: 100%;
+                    background-color: rgb(219, 97, 199);
+
+                    .progress_bar_dot {
+                        position: absolute;
+                        top: 50%;
+                        right: 0;
+                        width: 6px;
+                        height: 6px;
+                        background-color: rgb(235, 222, 222);
+                        border-radius: 999px;
+                        transform: translate(0, -50%);
+                        transition: transform 0.2s linear;
+                        z-index: 99;
+                    }
+                }
+
+
+            }
+
+            .now_time,
+            .end_time {
+                color: rgb(226, 217, 217);
+                font-size: 10px;
+            }
+
+            .end_time {
+                color: #686b6d;
+            }
+        }
+    }
+
+
+    .play_bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        bottom: (10 / @multiple);
+        width: 100%;
+        height: (60 / @multiple);
+        padding: 0 (41 / @multiple);
+        box-sizing: border-box;
+
+        .play_fun {
+            background: url('../asset/_eo1.png') 0% 0% no-repeat;
+        }
+
+        .order {
+            background: url('../asset/en1.png') 0% 0% no-repeat;
+        }
+
+        .order:active {
+            background: url('../asset/en2.png') 0% 0%/cover no-repeat;
+        }
+
+        .loop {
+            background: url('../asset/_enb.png') 0% 0% no-repeat;
+        }
+
+        .loop:active {
+            background: url('../asset/_enc.png') 0% 0%/cover no-repeat;
+        }
+
+        .random {
+            background: url('../asset/enu.png') 0% 0% no-repeat;
+        }
+
+        .random:active {
+            background: url('../asset/env.png') 0% 0%/cover no-repeat;
+        }
+
+        .play_order,
+        .play_fun {
+            width: (33 / @multiple);
+            height: (30 / @multiple);
+            background-size: cover;
+        }
+
+        .play_prev {
+            background: url('../asset/_elk.png') 0% 0% no-repeat;
+        }
+
+        .play_next {
+            background: url('../asset/_ele.png') 0% 0% no-repeat;
+        }
+
+        .play_prev,
+        .play_next {
+            width: (38 / @multiple);
+            height: (38 / @multiple);
+            background-size: cover;
+        }
+
+        .play_btn {
+            width: (60 / @multiple);
+            height: (60 / @multiple);
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .suspend {
+            background: url('../asset/_f44.png') 0% 0% no-repeat;
+            background-size: cover;
+        }
+
+        .play {
+            background: url('../asset/_f46.png') 0% 0% no-repeat;
+            background-size: cover;
+        }
+
+    }
+
+
+}
+
+
+#mask,
+#bj {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: (@screenSize / @multiple);
+    height: 100vh;
+    transform: translateX(-50%);
+}
+
+#bj {
+    background: url('../asset/eku.png') 0% 0% no-repeat;
+    background-size: cover;
+    filter: blur(80px);
+    z-index: -20;
+}
+
+#mask {
+    background-color: rgba(0, 0, 0, .8);
+    z-index: -19;
+}
