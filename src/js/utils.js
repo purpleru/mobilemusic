@@ -49,12 +49,29 @@ $.ajaxSetup({
 
 
 export function getPlayLists(id, callback) {
+
+    try {
+        var playerData = JSON.parse(window.localStorage.getItem('player') || '{}');
+    } catch (err) {
+        playerData = {};
+    }
+
+    if (playerData && id === playerData.id && playerData.playlist) {
+        callback && callback(playerData.playlist);
+        return;
+    }
+
+
     $.get('/playlist/detail', {
         id: id || 4970728784
     }, function (data) {
         var { code, playlist } = data;
         if (code === 200) {
             console.log(playlist.tracks);
+            window.localStorage.setItem('player', JSON.stringify({
+                id: id,
+                playlist: playlist.tracks
+            }));
             callback && callback(playlist.tracks);
         } else {
             alert('获取歌单列表失败');

@@ -30,37 +30,14 @@ class Player {
         this.$play_btn = this.$playerEl.find('.play_btn');
         this.$prev = this.$playerEl.find('.play_prev');
         this.$next = this.$playerEl.find('.play_next');
+        this.$playListsEl = $(options.playListsEl);
         this.progress = options.progress;
         this.playMode = 0;
         this.init();
     }
 
     init() {
-        var _this = this;
-
-        this.$play_btn.on('click', function (evnt) {
-            if (evnt.offsetY < 10) return;
-            if (_this.musicId === -1) {
-                var music = _this.playerLists[0];
-                _this.playMusicFun(music);
-            } else {
-                _this.playMusicFun(_this.playMusic);
-            }
-        });
-
-        this.$prev.on('click', function () {
-            var music = _this.playerLists[_this.prevMusic()];
-            setMusicInfo(music);
-            _this.playMusicFun(music);
-        });
-
-        this.$next.on('click', function () {
-            var index = _this.nextMusic();
-            var music = _this.playerLists[index];
-            console.log(music);
-            console.log(index);
-            _this.playMusicFun(music);
-        });
+      
     }
 
     initPlayMode(el) {

@@ -15,7 +15,8 @@ var progress = new Progress('.progress_box');
 var player = new Player({
     el: '.play_bar',
     audioEl: '#audio',
-    progress: progress
+    progress: progress,
+    playListsEl: '#play-lists > ul'
 });
 
 player.initPlayMode('.play_bar > .play_order');
@@ -57,22 +58,29 @@ player.audioEnded(function () {
 });
 
 function setMusicList(id) {
+
     getPlayLists(id, function (musicLists) {
         player.playerLists = musicLists;
-        var htmlStrs = [];
+        $('#play-lists > ul').empty();
+        $('#play-lists > header em').html('(' + musicLists.length + ')');
         $.each(musicLists, function (index, item) {
-            htmlStrs.push(`
-            <li>
+            var $li = $(`<li data-musicId="${item.id}">
             <span>${item.name}</span>
             <a class="icon-del" href="javascript:;"></a>
-            </li>
-            `);
+           </li>`).get(0);
+            $li.music = item;
+            $('#play-lists > ul').append($li);
         });
-        $('#play-lists > ul').html(htmlStrs.join(''));
     });
 }
 
-setMusicList(null);
+try {
+    var playerData = JSON.parse(window.localStorage.getItem('player') || '{}');
+} catch (err) {
+    playerData = {};
+}
+
+setMusicList(playerData.id);
 
 // console.log(new Audio('http://192.168.1.4:8080/mp3/g.mp3'));
 
@@ -121,13 +129,47 @@ $(function () {
 
     });
 
+
+    var lis = $('#play-lists > ul').get(0).getElementsByTagName('li');
+
+    // 播放/暂停
+    $('.play_btn').on('click', function (evnt) {
+
+        if (evnt.offsetY < 10) return;
+        if (player.musicId === -1) {
+            $(lis).eq(0).click();
+        } else {
+            player.playMusicFun(player.playMusic);
+        }
+    });
+
+    // 上一首
+    $('.play_prev').on('click', function () {
+        $(lis).eq(player.prevMusic()).click();
+    });
+
+    // 下一首
+    $('.play_next').on('click', function () {
+        $(lis).eq(player.nextMusic()).click();
+    });
+
     $('#masking').on('click', function () {
         $(this).fadeOut(100);
     });
 
+
+    $('#play-lists > ul').on('click', 'li', function (e) {
+        console.log(this.music);
+
+        $(this).addClass('active').siblings().removeClass('active');
+        player.playMusicFun(this.music);
+
+        // console.log($(this).siblings());
+        e.stopPropagation();
+    });
+
     $('.play_fun').on('click', function () {
         $('#masking').fadeIn(100);
-
     });
 });
 
