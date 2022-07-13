@@ -59,6 +59,16 @@ player.audioEnded(function () {
 function setMusicList(id) {
     getPlayLists(id, function (musicLists) {
         player.playerLists = musicLists;
+        var htmlStrs = [];
+        $.each(musicLists, function (index, item) {
+            htmlStrs.push(`
+            <li>
+            <span>${item.name}</span>
+            <a class="icon-del" href="javascript:;"></a>
+            </li>
+            `);
+        });
+        $('#play-lists > ul').html(htmlStrs.join(''));
     });
 }
 
@@ -103,11 +113,20 @@ $(function () {
 
             }
         } catch (err) {
-            console.warn('设置播放歌单列表失败,输入值:',listId);
+            console.warn('设置播放歌单列表失败,输入值:', listId);
             return false;
         }
 
         listId && setMusicList(listId);
+
+    });
+
+    $('#masking').on('click', function () {
+        $(this).fadeOut(100);
+    });
+
+    $('.play_fun').on('click', function () {
+        $('#masking').fadeIn(100);
 
     });
 });

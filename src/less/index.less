@@ -18,6 +18,10 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+ul {
+    list-style: none;
+}
+
 @media screen and (min-width:520px) {
     html {
         font-size: 27.7333px;
@@ -211,7 +215,7 @@ body {
             z-index: 9;
             touch-action: none;
             -webkit-touch-callout: none;
-            
+
             .progress {
                 width: (270 / @multiple);
                 height: 1px;
@@ -340,7 +344,8 @@ body {
 
 
 #mask,
-#bj {
+#bj,
+#masking {
     position: fixed;
     top: 0;
     left: 50%;
@@ -359,4 +364,70 @@ body {
 #mask {
     background-color: rgba(0, 0, 0, .8);
     z-index: -19;
+}
+
+#masking {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.23);
+    z-index: 30;
+}
+
+#play-lists {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: (338 / @multiple);
+    height: 410px;
+    background-color: #fff;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    header {
+        padding: 0 (10 / @multiple);
+        height: 50px;
+        line-height: 50px;
+
+        h1 {
+            vertical-align: middle;
+            font-size: 16px;
+            font-weight: bold;
+
+            em {
+                font-size: 12px;
+                font-style: normal;
+                font-weight: normal;
+                font-family: "Microsoft YaHei";
+                color: #9e9898;
+            }
+        }
+
+    }
+
+    ul {
+        height: 360px;
+        overflow: auto;
+
+        li {
+            position: relative;
+            padding: 0 (10 / @multiple);
+            font-size: 14px;
+            height: 40px;
+            line-height: 40px;
+
+            &:active {
+                background-color: rgba(0, 0, 0, 0.36);
+            }
+
+            .icon-del {
+                position: absolute;
+                top: 10px;
+                right: (10 / @multiple);
+                width: 20px;
+                height: 20px;
+                background: url('../asset/c8r.png') no-repeat 0 0/20px 20px;
+            }
+        }
+    }
+
 }
