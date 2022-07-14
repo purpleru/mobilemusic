@@ -19,17 +19,24 @@ module.exports = {
                     loader: 'style-loader'
                 },
                 {
-                  loader:'css-loader'  
+                    loader: 'css-loader'
                 },
                 {
                     loader: 'less-loader'
                 }]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: '[name][ext]'
+                }
             }
         ]
     },
-    plugins:[
+    plugins: [
         new HTMLWebpackPlugin({
-            template:path.resolve('./public/index.html')
+            template: path.resolve('./public/index.html')
         })
     ]
 }

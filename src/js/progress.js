@@ -43,7 +43,7 @@ export default class Progress {
 
             if (_that.canMove) {
                 var { clientX } = evnt.targetTouches[0],
-                    percent = _that.computeDis(clientX);  
+                    percent = _that.computeDis(clientX);
                 callback && callback(percent);
                 $(this).css({
                     transform: 'translate(0, -50%) scale(2)'
@@ -105,8 +105,8 @@ export default class Progress {
     }
 
     reset() {
-        this.setPlayTime(0);
-        this.setEndTime(0);
+        this.setPlayTime('00:00');
+        this.setEndTime('00:00');
         this.changeProgressBar(0);
     }
 }

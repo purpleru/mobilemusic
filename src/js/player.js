@@ -28,16 +28,8 @@ class Player {
         this.$playerEl = $(options.el);
         this.$audioEl = $(options.audioEl);
         this.$play_btn = this.$playerEl.find('.play_btn');
-        this.$prev = this.$playerEl.find('.play_prev');
-        this.$next = this.$playerEl.find('.play_next');
-        this.$playListsEl = $(options.playListsEl);
         this.progress = options.progress;
         this.playMode = 0;
-        this.init();
-    }
-
-    init() {
-      
     }
 
     initPlayMode(el) {
@@ -88,10 +80,12 @@ class Player {
         var audio = this.$audioEl.get(0);
 
         if (music !== this.playMusic) {
+            window.isDisableDel = true;
             getPlayAddress(music.id, function (data) {
                 var [addressData] = data;
                 this.playMusic = music;
                 this.musicId = music.id;
+                window.isDisableDel = false;
                 if (addressData.code === 200 && addressData.url) {
                     audio.src = addressData.url;
                     audio.play();
@@ -126,23 +120,8 @@ class Player {
     }
 
     audioEnded(callback) {
-        var _this = this;
         this.$audioEl.on('ended', function () {
-            console.log('结束了');
-            _this.$play_btn.addClass('play');
-            switch (_this.playMode) {
-                case 1:
-                    var index = Math.floor(Math.random() * _this.playerLists.length);
-                    _this.playMusicFun(_this.playerLists[index]);
-                    break;
-                case 2:
-                    _this.$play_btn.click();
-                    break;
-                default:
-                    _this.$next.click();
-                    break;
-            }
-            // callback && callback();
+            callback && callback.call(this);
         });
     }
 
@@ -152,6 +131,24 @@ class Player {
         var duration = this.$audioEl.prop('duration');
         this.$audioEl.prop('currentTime', parseInt(val * duration));
         return true;
+    }
+
+    reset() {
+        this.playerLists = [];
+        this.playMusic = {};
+        this.musicId = -1;
+        var $song_name = $('.song_name'),
+            $song_author = $('.song_author'),
+            $cover = $('#cover'),
+            $bj = $('#bj');
+
+        $song_name.text('I Love You');
+        $song_author.text('----');
+        $cover.css('background-image', 'url("' + require('../asset/el4.png') + '")');
+        $bj.css('background-image', 'url("' + require('../asset/eku.png') + '")');
+        this.$play_btn.addClass('play');
+        this.$audioEl.prop('src','');
+        this.progress.reset();
     }
 
 }

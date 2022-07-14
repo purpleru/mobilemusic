@@ -1,10 +1,8 @@
-
-
 import './less/index.less';
 
 import $ from 'jquery';
 
-import { scale, timeFormat, getPlayLists } from './js/utils';
+import { scale, timeFormat, getPlayLists, getLocalData } from './js/utils';
 
 import Player from './js/player';
 
@@ -15,12 +13,10 @@ var progress = new Progress('.progress_box');
 var player = new Player({
     el: '.play_bar',
     audioEl: '#audio',
-    progress: progress,
-    playListsEl: '#play-lists > ul'
+    progress: progress
 });
 
 player.initPlayMode('.play_bar > .play_order');
-
 
 progress.progressEvent(function (percent) {
     console.log(player.playMusic);
@@ -53,8 +49,22 @@ player.audioTimeupdate(function (percent) {
     }
 });
 
+// Ended
 player.audioEnded(function () {
-    // progress.changeProgressBar(0);
+    console.log('结束了');
+    player.$play_btn.addClass('play');
+    switch (player.playMode) {
+        case 1:
+            var index = Math.floor(Math.random() * player.playerLists.length);
+            $('#play-lists > ul > li').eq(index).click();
+            break;
+        case 2:
+            player.$play_btn.click();
+            break;
+        default:
+            $('.play_next').click();
+            break;
+    }
 });
 
 function setMusicList(id) {
@@ -74,11 +84,7 @@ function setMusicList(id) {
     });
 }
 
-try {
-    var playerData = JSON.parse(window.localStorage.getItem('player') || '{}');
-} catch (err) {
-    playerData = {};
-}
+var playerData = getLocalData('player');
 
 setMusicList(playerData.id);
 
@@ -90,10 +96,8 @@ $(function () {
 
     $('.fun_bar_love').click(function () {
         scale(this);
-
         var w = window.screen.width;
-
-        alert(`
+        console.log(`
         screen:${w},
         devicePixelRatio:${window.devicePixelRatio}
         `);
@@ -160,12 +164,37 @@ $(function () {
 
     $('#play-lists > ul').on('click', 'li', function (e) {
         console.log(this.music);
-
         $(this).addClass('active').siblings().removeClass('active');
         player.playMusicFun(this.music);
-
-        // console.log($(this).siblings());
         e.stopPropagation();
+    });
+
+    // 节流
+    window.isDisableDel = false;
+
+    $('#play-lists > ul').on('click', '.icon-del', function (e) {
+        if (window.isDisableDel) return false;
+        var parentNode = this.parentNode;
+        var index = player.playerLists.findIndex(({ id }) => id === parentNode.music.id)
+
+        if (index < 0) return false;
+        var curDel = player.playerLists.splice(index, 1)[0];
+        parentNode.remove();
+        if (player.playerLists.length === 0) {
+            // 重置
+            player.reset();
+        } else if (curDel.id === player.musicId) {
+            if (index >= player.playerLists.length) {
+                $(lis).eq(0).click();
+            } else {
+                $(lis).eq(index).click();
+            }
+        }
+        playerData.playlist = player.playerLists;
+        window.localStorage.setItem('player', JSON.stringify(playerData));
+        $('#play-lists > header em').html('(' + player.playerLists.length + ')');
+        e.stopPropagation();
+        e.preventDefault();
     });
 
     $('.play_fun').on('click', function () {

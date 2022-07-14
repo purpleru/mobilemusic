@@ -50,13 +50,9 @@ $.ajaxSetup({
 
 export function getPlayLists(id, callback) {
 
-    try {
-        var playerData = JSON.parse(window.localStorage.getItem('player') || '{}');
-    } catch (err) {
-        playerData = {};
-    }
+    var playerData = getLocalData('player');
 
-    if (playerData && id === playerData.id && playerData.playlist) {
+    if (playerData && id === playerData.id && playerData.playlist && playerData.playlist.length !== 0) {
         callback && callback(playerData.playlist);
         return;
     }
@@ -94,9 +90,42 @@ export function getPlayAddress(id, callback) {
     });
 }
 
+export function getLocalData(key, type) {
+
+    var localData = window.localStorage.getItem(key) || '';
+
+    try {
+        switch (type) {
+            case String:
+            case 'String':
+            case 'string':
+                return localData.toString();
+            case Array:
+            case 'Array':
+            case 'array':
+                type = '[]';
+                break;
+            default:
+                type = '{}';
+                break;
+
+        }
+        var parserData = JSON.parse(localData || type);
+    } catch (err) {
+        if (type === '[]') {
+            parserData = [];
+        } else {
+            parserData = {};
+        }
+    }
+
+    return parserData;
+}
+
 export default {
     scale,
     timeFormat,
     getPlayLists,
-    getPlayAddress
+    getPlayAddress,
+    getLocalData
 }
