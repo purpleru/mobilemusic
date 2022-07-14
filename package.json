@@ -1,13 +1,19 @@
 {
   "name": "MobileMusic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个简单的网易云H5移动端播放器",
   "main": "./src/index.js",
   "scripts": {
     "dev": "webpack serve --config ./webpack.config.js",
     "build": "webpack build --config ./webpack.prod.js"
   },
-  "keywords": [],
+  "keywords": [
+    "网易云音乐",
+    "音乐播放器",
+    "移动端播放器",
+    "H5播放器",
+    "网易H5播放器"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
